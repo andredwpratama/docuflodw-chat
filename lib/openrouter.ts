@@ -5,12 +5,12 @@ export const openrouter = new OpenAI({
   baseURL: "https://openrouter.ai/api/v1",
 });
 
-export async function chatWithAI(message: string) {
+export async function chatWithAI(messages: OpenAI.Chat.Completions.ChatCompletionMessageParam[]) {
   const res = await openrouter.chat.completions.create({
     model: "minimax/minimax-m2.5:free",
-    messages: [
-      { role: "user", content: message },
-    ],
+    messages,
+    max_tokens: 50,
+    temperature: 0,
   });
 
   return res.choices[0].message.content;
